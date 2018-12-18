@@ -14,7 +14,7 @@ var app = express();
 //Mongoose db setup
 
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://singhgaurav:mdwbo1903!%40#AZ@ds135974.mlab.com:35974/peoplechain';
+var mongoDB = process.env.MONGO_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
