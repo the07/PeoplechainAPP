@@ -3,15 +3,18 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
     {
-        username: {type: String, required: true, max:45},
+        username: {type: String, required: true, max:45, unique: true, trim: true},
         password: {type: String, required: true, max:256},
-        publicKey: {type: String},
+        publicKey: {type: String, unique: true, trim: true},
+        email: {type: String, unique: true, trim: true},
         first_name: {type: String},
         last_name: {type: String},
         date_of_birth: {type: Date},
         gender: {type: String, enum: ['Male', 'Female', 'Other']},
         location: {type: String},
-        skills: {type: Array} // enum should be 'SkillSchema'
+        skills: {type: Array}, // enum should be 'SkillSchema'
+        transactions: {type: Array},
+        active: {type: Boolean, default: false},
     }
 );
 
@@ -27,6 +30,14 @@ UserSchema
 .virtual('url')
 .get(function () {
     return 'www.peoplechain.com/' + this._id;
+})
+
+// Balance of a user
+UserSchema
+.virtual('balance') 
+.get(function () {
+    let balance = 100
+    return balance;
 })
 
 // Export model

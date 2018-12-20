@@ -14,7 +14,11 @@ var RecordSchema = new Schema(
         status: {type: String, enum: ['SIGNED', 'UNSIGNED', 'DECLINED', 'REVIEW'], default: 'UNSIGNED'},
         user_signature: {type: String},
         signee: {type: Schema.Types.ObjectId, ref: 'User'},
-        organization_signature: {type: String}
+        signee_signature: {type: String},
+        transactionId: {type: String},
+        signTransactionId: {type: String},
+        creationTimestamp: {type: Date},
+        signTimeStamp: {type: Date}
     }
 );
 
@@ -25,4 +29,4 @@ RecordSchema
 });
 
 // Export model
-module.exports = mongoose.model('Records', RecordSchema);
+module.exports = mongoose.model('Record', RecordSchema);
