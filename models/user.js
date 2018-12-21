@@ -7,6 +7,8 @@ var UserSchema = new Schema(
         password: {type: String, required: true, max:256},
         publicKey: {type: String, unique: true, trim: true},
         email: {type: String, unique: true, trim: true},
+        phone: {type: Number, unique: true, min: 10, max: 10},
+        phone_verified: {type: Boolean, default: false},
         first_name: {type: String},
         last_name: {type: String},
         date_of_birth: {type: Date},

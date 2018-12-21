@@ -16,6 +16,7 @@ var app = express();
 
 var mongoose = require('mongoose');
 var mongoDB = process.env.MONGO_URL;
+console.info('MongoDB URL: '  + mongoDB);
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
