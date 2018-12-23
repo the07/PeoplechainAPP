@@ -14,7 +14,7 @@ var UserSchema = new Schema(
         date_of_birth: {type: Date},
         gender: {type: String, enum: ['Male', 'Female', 'Other']},
         location: {type: String},
-        skills: {type: Array}, // enum should be 'SkillSchema'
+        skills: {type: Array, max: 5}, // enum should be 'SkillSchema'
         transactions: {type: Array},
         active: {type: Boolean, default: false},
     }

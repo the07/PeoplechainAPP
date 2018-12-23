@@ -5,6 +5,7 @@ var RequestSchema = new Schema (
     {
         requestedUser: {type: Schema.Types.ObjectId, ref: 'User', required: true},
         requestingUser: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+        requestedEntity: {type: String, required: true},
         status: {type: String, enum: ['AWAITING', 'GRANTED', 'DECLIINED'], default: 'AWAITING'},
         sharedEncryptedKey: {type: String}
     }
