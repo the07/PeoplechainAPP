@@ -18,7 +18,7 @@ module.exports = class Mailer {
         })
     }
 
-    sendMail (toEmailAddress, subject, text) {
+    sendMail (toEmailAddress, subject, text, callback) {
         var mailOptions = {
             from: this.username,
             to: toEmailAddress,
@@ -27,11 +27,7 @@ module.exports = class Mailer {
         };
 
         this.transporter.sendMail(mailOptions, function(error, info) {
-            if (error) {
-                console.error.bind(console, 'Unable to send mail');
-            } else {
-                console.log('Email send: ' + info.response);
-            }
-        }) 
+            callback(error, info);
+        }); 
     }
 }

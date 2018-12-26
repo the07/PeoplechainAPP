@@ -1,9 +1,26 @@
 var Record = require('../models/record');
 var Request = require('../models/request');
 
+var crypto = require('../utils/crypto/index');
+
 // Create a record
 exports.add_record = function(req, res) {
-    res.send('Not yet implemented, Create record');
+
+    // Check if public key exists 
+
+    // Check if the hash matches the generated hash - calculate hash
+    
+    // Check if signature is valid
+    crypto.verify(dataHash, req.body.signature, req.body.publicKey);
+    // Upload to IPFS and get multihash
+
+    // Add to blockchain and get transaction id
+
+    // Add to the Database
+
+    // Return Success
+
+
 };
 
 // Request signature 

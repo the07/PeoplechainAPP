@@ -1,2 +1,4 @@
 #Ignore these directories
 node_modules/
+config/
+sessions/

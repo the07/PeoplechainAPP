@@ -6,6 +6,16 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 
+const uuid = require('uuid/v4');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
+
+var secret = require('./config/secret');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var organizationsRouter = require('./routes/organizations');
@@ -14,13 +24,18 @@ var app = express();
 
 //Mongoose db setup
 
+var mongoUrl = require('./config/mongo');
+
 var mongoose = require('mongoose');
-var mongoDB = process.env.MONGO_URL;
+var mongoDB = mongoUrl.mongoURI;
 console.info('MongoDB URL: '  + mongoDB);
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+
+// Require the passport config
+require('./utils/passport/index')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,8 +47,26 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  genid: (req) => {
+    console.log("Inside the middleware");
+    console.log(req.sessionID);
+    return uuid();
+  },
+  store: new FileStore(),
+  secret: secret.secret,
+  resave: false,
+  saveUninitialized: true
+}))
+
+app.use(passport.initialize());
+app.use(flash());
+app.use(passport.session());
+
+
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/organizations', organizationsRouter);
 
 // catch 404 and forward to error handler
